@@ -10,6 +10,20 @@
 #define APFS_MAX_FILE_SYSTEMS 	100
 
 /*
+ * All object nodes start with a 32-byte header
+ */
+struct apfs_obj_header {
+	u_int64_t checksum;		/* Checksum of the object */
+	oid_t object_id;		/* Identify de object in the container */
+	xid_t transaction_id;		/* Incremented when the object is changed */
+	u_int16_t block_type;		/* Identify the type of object contained */
+	u_int16_t flags;
+	u_int16_t block_subtype;	/* Identify the subtype of object contained */
+	u_int16_t padding;		/* A two-byte padding */
+};
+typedef struct apfs_obj_header apfs_obj_header_t;
+
+/*
  * Definition of the superblook. This is a first structure in the partition.
  * Among other things, this structure saves information about the volumes 
  * and checkpoints.

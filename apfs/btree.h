@@ -2,6 +2,7 @@
 #define _APFS_BTREE_H
 
 #include "types.h"
+#include "container.h"
 
 /*
  * Flags to be used in apfs_btree_node_phys_t.btn_flags field.

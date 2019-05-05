@@ -27,6 +27,24 @@
 #define APFS_TYPE_DIR_STATS	10
 #define APFS_TYPE_SNAP_NAME	11
 
+/*
+ * Directory entry types
+ */
+#define APFS_DT_UNKNOWN 	0
+#define APFS_DT_FIFO 		1
+#define APFS_DT_CHR 		2
+#define APFS_DT_DIR 		4
+#define APFS_DT_BLK 		6
+#define APFS_DT_REG 		8
+#define APFS_DT_LNK 		10
+#define APFS_DT_SOCK 		12
+#define APFS_DT_WHT 		14
+
+/*
+ * Mask to use in apfs_record_drec_val_t.flags to
+ * compare with the directory entry type constants.
+ */
+#define APFS_DREC_TYPE_MASK	0x000F
 
 struct apfs_wrapped_meta_crypto_state_t {
 	u_int16_t major_version;
@@ -159,6 +177,18 @@ struct apfs_record_inode_val_t {
 	u_int16_t pad1;
 	u_int64_t pad2;
 	u_int8_t xfields[];
+} __attribute__((packed));
+
+/* APFS_TYPE_FILE_EXTENT */
+struct apfs_record_file_extent_val_t {
+	u_int64_t len_and_flags;
+	u_int64_t phys_block_num;
+	u_int64_t crypto_id;
+} __attribute__((packed));
+
+struct apfs_record_file_extent_key_t {
+	struct apfs_record_key_t hdr;
+	u_int64_t logical_addr;
 } __attribute__((packed));
 
 #endif /* _APFS_VOLUME_H */
