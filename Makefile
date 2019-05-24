@@ -1,7 +1,7 @@
 
 ifneq ($(KERNELRELEASE),)
 	obj-m:= apfs.o
-	apfs-objs := super.o dir.o inode.o
+	apfs-objs := super.o dir.o file.o inode.o util.o
 else
 	KERNELDIR ?= /usr/src/linux
 	PWD = $(shell pwd)
