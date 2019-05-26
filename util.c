@@ -24,8 +24,8 @@
 #include "apfs/volume.h"
 #include "apfs/omap.h"
 
-#define CMP_NODE_LEAF      0
-#define CMP_NODE_NONLEAF   1
+#define CMP_NODE_NONLEAF    0
+#define CMP_NODE_LEAF       1
 
 /*
  * Returns the id of a file-system object. 
@@ -85,9 +85,8 @@ int cmp_omap_toc_keys(u_int64_t oid, u_int64_t xid,
     if (oid == oid_c && xid == xid_c)
         return 0;
         
-    if ((oid == oid_c && xid > xid_c && node_type == CMP_NODE_NONLEAF)
-            || (oid >= oid_c && node_type == CMP_NODE_LEAF)
-            || (oid == oid_c && xid > xid_c && node_type == CMP_NODE_LEAF))
+    if ((oid == oid_c && xid > xid_c)
+            || (oid >= oid_c && node_type == CMP_NODE_NONLEAF))
         return 2;
     
     if (oid > oid_c)
@@ -162,7 +161,7 @@ int cmp_fstree_toc_keys(u_int64_t oid, u_int64_t otype, char* name,
     if ((oid > oid_c 
                 || (oid == oid_c && otype > otype_c) 
                 || (oid == oid_c && otype == otype_c && strc >= 0)) 
-            && type == CMP_NODE_LEAF)
+            && type == CMP_NODE_NONLEAF)
         return 2;
     
     if ((oid > oid_c)
@@ -237,9 +236,9 @@ u_int8_t* find_in_node(struct super_block* sb,
     u_int8_t node_type;
     
     if (le16_to_cpu(node->btn_level) != 0)
-        node_type = CMP_NODE_LEAF;
-    else
         node_type = CMP_NODE_NONLEAF;
+    else
+        node_type = CMP_NODE_LEAF;
     
     left = 0;
     right = le32_to_cpu(node->btn_nkeys) - 1;

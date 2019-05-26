@@ -163,7 +163,7 @@ static int apfs_fill_sb(struct super_block* sb, void* data, int silent)
     /*
      * Create the dentry of the root directory.
      */
-    root_inode = get_apfs_inode(sb, NULL, 2, S_IFDIR);
+    root_inode = get_apfs_inode(sb, NULL, ROOT_DIR_INO_NUM, S_IFDIR);
     if (!root_inode) {
         goto release_vol;
     }

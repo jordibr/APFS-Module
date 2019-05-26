@@ -80,9 +80,9 @@ static void list_dir(struct apfs_btree_node_phys_t* node,
         
         if (get_fs_obj_id(&(drec_key->hdr)) == inode->i_ino 
                 && get_fs_obj_type(&(drec_key->hdr)) == APFS_TYPE_DIR_REC) {
-            if (le16_to_cpu(drec_val->flags) & APFS_DT_DIR)
+            if (le16_to_cpu(drec_val->flags) & APFS_DREC_TYPE_MASK & APFS_DT_DIR)
                 entry_type = DT_DIR;
-            else if (le16_to_cpu(drec_val->flags) & APFS_DT_REG)
+            else if (le16_to_cpu(drec_val->flags) & APFS_DREC_TYPE_MASK & APFS_DT_REG)
                 entry_type = DT_REG;
             else 
                 continue;

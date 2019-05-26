@@ -28,6 +28,8 @@
 #define APFS_VOLNAME_LEN        256
 #define APFS_MODIFIED_NAMELEN   32
 
+#define ROOT_DIR_INO_NUM        2
+
 /*
  * The types of a file-system records.
  */
